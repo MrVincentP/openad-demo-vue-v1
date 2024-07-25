@@ -11,7 +11,7 @@
 </template>
 <script>
 import { Button, Popup } from 'vant';
-import { defineComponent, onMounted, nextTick, reactive } from 'vue';
+import { defineComponent, onMounted, nextTick, reactive, getCurrentInstance } from 'vue';
 import AsyncScript from '@/utils/AsyncScript';
 import { useRouter } from 'vue-router';
 
@@ -22,9 +22,10 @@ export default defineComponent({
     'van-popup': Popup,
   },
   setup() {
+    const { proxy } = getCurrentInstance();
     const openAds = reactive({
-      zoneId: 1,
-      reviveId: '6fced4eee9927b57847cf8dce447ceac',
+      zoneId: proxy.$AppEnv.zoneId,
+      reviveId: proxy.$AppEnv.reviveId,
     });
     const router = useRouter();
     const popup = reactive({

@@ -39,6 +39,8 @@ const importModules = [new MultiModule('OpenADApp', {
   sysApp: 'OpenADApp',
   sysName: 'OpenAD',
   webURL: 'https://www.openad.network/',
+  zoneId: '12',
+  reviveId: '6fced4eee9927b57847cf8dce447ceac',
   test: {
     staticURL: './',
     apiURL: 'https://www.openad.network',

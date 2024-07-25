@@ -6,4 +6,6 @@ export const AppEnv = {
   dist: process.env.dist,
   webURL: process.env.webURL,
   prod: process.env.dist,
+  zoneId: process.env.zoneId,
+  reviveId: process.env.reviveId,
 }

@@ -8,7 +8,7 @@
 </template>
 <script>
 import { Button } from 'vant';
-import { defineComponent, onMounted, onUnmounted, nextTick, reactive, ref } from 'vue';
+import { defineComponent, onMounted, onUnmounted, nextTick, reactive, ref, getCurrentInstance } from 'vue';
 import AsyncScript from '@/utils/AsyncScript';
 import { useRouter } from 'vue-router';
 
@@ -18,9 +18,10 @@ export default defineComponent({
     'van-button': Button,
   },
   setup() {
+    const { proxy } = getCurrentInstance();
     const openAds = reactive({
-      zoneId: 1,
-      reviveId: '6fced4eee9927b57847cf8dce447ceac',
+      zoneId: proxy.$AppEnv.zoneId,
+      reviveId: proxy.$AppEnv.reviveId,
     });
     const router = useRouter();
     const domReady = ref(false);
