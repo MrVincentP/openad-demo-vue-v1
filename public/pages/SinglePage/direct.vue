@@ -1,6 +1,6 @@
 <template>
   <div class="singlePage direct MFlex">
-    <h2>This page is a demo for direct load our ads! </h2>
+    <h2>This page is a demo for direct load OpenAd ads! </h2>
     <div class="openAds">
       <ins :data-revive-zoneid="openAds.zoneId" :data-revive-id="openAds.reviveId" />
     </div>

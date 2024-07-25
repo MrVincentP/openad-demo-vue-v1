@@ -23,7 +23,11 @@ export default defineComponent({
   },
   setup(){
     const paths = ref([{ path: '/SinglePage/direct', desc: 'single page with direct loading...' },
-      { path: '/SinglePage/async', desc: 'single page with asynchronous loading...' }]);
+      { path: '/SinglePage/async', desc: 'single page with asynchronous loading...' },
+      { path: '/SinglePage/dynamic', desc: 'single page with dynamic loading...' },
+      { path: '/popup/show', desc: 'single page with popup show loading...' },
+    ]);
+
     const router = useRouter();
 
     return { router, paths };

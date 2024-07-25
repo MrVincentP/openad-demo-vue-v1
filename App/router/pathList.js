@@ -25,6 +25,18 @@ const pathList = [{
       name: 'SinglePageAsync',
       meta: { title: '', keepAlive: false },
       component: () => import(/* webpackChunkName: "HomeIndex" */'@/pages/SinglePage/async.vue'),
+    },
+    {
+      path: '/SinglePage/dynamic',
+      name: 'SinglePageDynamic',
+      meta: { title: '', keepAlive: false },
+      component: () => import(/* webpackChunkName: "HomeIndex" */'@/pages/SinglePage/dynamic.vue'),
+    },
+    {
+      path: '/popup/show',
+      name: 'PopupShow',
+      meta: { title: '', keepAlive: false },
+      component: () => import(/* webpackChunkName: "HomeIndex" */'@/pages/popup/show.vue'),
     }],
 }];
 export default pathList;

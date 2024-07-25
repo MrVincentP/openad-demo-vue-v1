@@ -1,9 +1,7 @@
 <template>
-  <div class="singlePage async MFlex">
-    <h2>This page is a demo for async load OpenAd ads! </h2>
-    <div class="openAds">
-      <ins :data-revive-zoneid="openAds.zoneId" :data-revive-id="openAds.reviveId" />
-    </div>
+  <div class="singlePage dynamic MFlex">
+    <h2>This page is a demo for dynamic load OpenAd ads! </h2>
+    <div class="openAds"></div>
     <van-button @click="loadJs" type="primary" v-if="domReady">Load Ads</van-button>
     <van-button @click="router.push('/')" type="primary">Go Home</van-button>
   </div>
@@ -38,6 +36,8 @@ export default defineComponent({
     });
 
     const loadJs = () => {
+      document.querySelector('.openAds').innerHTML = `
+      <ins data-revive-zoneid="${openAds.zoneId}" data-revive-id="${openAds.reviveId}" />`;
       AsyncScript.load({
         name: 'openAdJs',
         version: new Date().valueOf(),
