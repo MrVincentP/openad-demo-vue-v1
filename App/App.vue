@@ -38,6 +38,25 @@ header {
     }
   }
 }
-
-footer { padding:0 8.3%; height:24rem; color:#fff; font-size:4.6rem; background:#000; }
+@media screen and (max-width: 1200px) {
+  header { padding:0 0 0 5%; }
+}
+@media screen and (max-width: 1000px) {
+  header {
+    padding:0 0 0 3%;
+    .logo {
+      font-size:6rem;
+      img { height:12rem; margin:0 3rem 0 0; }
+    }
+  }
+}
+@media screen and (max-width: 640px) {
+  header {
+    padding:0 0 0 20px; height:50px;
+    .logo {
+      font-size:20px;
+      img { height:30px; margin:0 10px 0 0; }
+    }
+  }
+}
 </style>
