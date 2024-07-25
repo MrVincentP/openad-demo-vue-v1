@@ -16,7 +16,7 @@ import AsyncScript from '@/utils/AsyncScript';
 import { useRouter } from 'vue-router';
 
 export default defineComponent({
-  name: 'SinglePageAsync',
+  name: 'PopupShow',
   components: {
     'van-button': Button,
     'van-popup': Popup,

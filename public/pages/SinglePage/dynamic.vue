@@ -13,7 +13,7 @@ import AsyncScript from '@/utils/AsyncScript';
 import { useRouter } from 'vue-router';
 
 export default defineComponent({
-  name: 'SinglePageAsync',
+  name: 'SinglePageDynamic',
   components: {
     'van-button': Button,
   },
