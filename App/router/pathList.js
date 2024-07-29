@@ -33,6 +33,12 @@ const pathList = [{
       component: () => import(/* webpackChunkName: "HomeIndex" */'@/pages/SinglePage/dynamic.vue'),
     },
     {
+      path: '/SinglePage/ajax',
+      name: 'SinglePageAjax',
+      meta: { title: '', keepAlive: false },
+      component: () => import(/* webpackChunkName: "HomeIndex" */'@/pages/SinglePage/ajax.vue'),
+    },
+    {
       path: '/popup/show',
       name: 'PopupShow',
       meta: { title: '', keepAlive: false },

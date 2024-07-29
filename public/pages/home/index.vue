@@ -26,6 +26,7 @@ export default defineComponent({
       { path: '/SinglePage/async', desc: 'single page with asynchronous loading...' },
       { path: '/SinglePage/dynamic', desc: 'single page with dynamic loading...' },
       { path: '/popup/show', desc: 'single page with popup show loading...' },
+      { path: '/SinglePage/ajax', desc: 'single page with ajax request...' },
     ]);
 
     const router = useRouter();

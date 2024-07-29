@@ -9,7 +9,7 @@ class MultiModule {
   constructor(name, opts) {
     Object.assign(this, {
       name,
-      port: 9000,
+      port: 10000,
       host: '0.0.0.0',
       filename: '',
       title: '',
