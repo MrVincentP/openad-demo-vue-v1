@@ -51,7 +51,6 @@ export default defineComponent({
         hrefs.push(decodeURIComponent(hrefMatch[1]).replaceAll('&amp;', '&'));
       }
 
-      // 提取所有 img 的 src 属性值
       let srcs = [];
       let srcRegex = /<img[^>]+src=['"]([^'"]*)['"]/g;
       let srcMatch;
