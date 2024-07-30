@@ -2,14 +2,14 @@
   <div class="singlePage ajax MFlex">
     <h2>This page is a demo for ajax request OpenAd ads! </h2>
     <div class="openAds" v-if="img.src && img.href">
-      <a :href="img.href" class="Flex" target="_blank" rel="noopener nofollow">
+      <a href="javascript:void(0)" class="Flex" rel="noopener nofollow" @click="clickCb">
         <img :src="img.src"
              :width="img.width"
              :height="img.height"
              style="max-width: 100%;max-height: 100%;object-fit: contain;">
       </a>
     </div>
-    <van-button @click="AjaxRequest" type="primary">
+    <van-button @click="AjaxRequest" type="primary" v-if="!img.src && !img.href">
       Ajax Request
     </van-button>
     <van-button @click="router.push('/')" type="primary">
@@ -126,7 +126,24 @@ export default defineComponent({
       });
     }
 
-    return { router, openAds, AjaxRequest, img };
+    const clickCb = () => {
+      let t = img.href.indexOf('&dest='), href = img.href.substring(t+6);
+      window.J$.ajax({
+        method: 'get',
+        url: 'https://api.allorigins.win/raw?url='+encodeURIComponent(img.href),
+        async: false,
+        dataType: 'json',
+        jsonp: 'callback',
+        success: () => {
+          window.open(href);
+        },
+        error: () => {
+          window.open(href);
+        },
+      });
+    }
+
+    return { router, openAds, AjaxRequest, img, clickCb };
   },
 });
 </script>
