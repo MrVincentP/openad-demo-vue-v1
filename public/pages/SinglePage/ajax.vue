@@ -81,9 +81,9 @@ export default defineComponent({
         zones: openAds.zoneId,
         prefix: 'revive-0-'+openAds.reviveId,
         referer: window.location.origin+window.location.pathname,
-        loc: window.location.origin+Obj2String(img.tgData),
+        loc: window.location.origin,
       }
-      let url = 'https://alpha.openad.network/www/delivery/asyncspc.php'+Obj2String(params);
+      let url = 'https://alpha.openad.network/www/delivery/asyncspc.php'+Obj2String({ ...img.tgData, ...params });
       window.J$.ajax({
         method: 'get',
         url: 'https://api.allorigins.win/raw?url='+encodeURIComponent(url),
