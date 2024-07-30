@@ -76,6 +76,7 @@ export default defineComponent({
         lan: user['language_code'] || '',
         V: app.version || '',
         platform: app.platform || '',
+        fromType: 'ajax',
       };
       const params = {
         zones: openAds.zoneId,
