@@ -41,6 +41,7 @@ export default defineComponent({
       src: '',
       href: '',
       cb: '',
+      tgData: {},
     });
 
     const extractLinks = (html) => {
@@ -68,7 +69,7 @@ export default defineComponent({
     const AjaxRequest = () => {
       const app = window.Telegram.WebApp;
       const user = app.initDataUnsafe.user || {};
-      const tgData = {
+      img.tgData = {
         Cid: user.id || '',
         FirstName: user['first_name'] || '',
         LastName: user['last_name'] || '',
@@ -80,7 +81,7 @@ export default defineComponent({
         zones: openAds.zoneId,
         prefix: 'revive-0-'+openAds.reviveId,
         referer: window.location.origin+window.location.pathname,
-        loc: window.location.origin+Obj2String(tgData),
+        loc: window.location.origin+Obj2String(img.tgData),
       }
       let url = 'https://alpha.openad.network/www/delivery/asyncspc.php'+Obj2String(params);
       window.J$.ajax({
@@ -114,7 +115,7 @@ export default defineComponent({
         urlParams[key] = value;
       });
       const { bannerid, campaignid, zoneid, cb } = urlParams;
-      let url = img.cb.substring(0, img.cb.indexOf('?'))+Obj2String({ bannerid, campaignid, zoneid, cb, loc: params.loc });
+      let url = img.cb.substring(0, img.cb.indexOf('?'))+Obj2String({ ...img.tgData, bannerid, campaignid, zoneid, cb, loc: params.loc });
       window.J$.ajax({
         method: 'get',
         url: 'https://api.allorigins.win/raw?url='+encodeURIComponent(url),
@@ -127,10 +128,10 @@ export default defineComponent({
     }
 
     const clickCb = () => {
-      let t = img.href.indexOf('&dest='), href = img.href.substring(t+6);
+      let t = img.href.indexOf('&dest='), cbUrl = img.href.substring(0, t), href = img.href.substring(t+6);
       window.J$.ajax({
         method: 'get',
-        url: 'https://api.allorigins.win/raw?url='+encodeURIComponent(img.href),
+        url: 'https://api.allorigins.win/raw?url='+encodeURIComponent(cbUrl+Obj2String(img.tgData).replace('?', '&')+'&dest='+href),
         async: false,
         dataType: 'json',
         jsonp: 'callback',
