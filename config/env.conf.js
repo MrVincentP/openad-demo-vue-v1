@@ -9,7 +9,7 @@ class MultiModule {
   constructor(name, opts) {
     Object.assign(this, {
       name,
-      port: 10000,
+      port: 9000,
       host: '0.0.0.0',
       filename: '',
       title: '',
@@ -18,6 +18,16 @@ class MultiModule {
         staticURL: './',
         apiURL: 'https://www.openad.network',
         dist: 'dev',
+      },
+      test: {
+        staticURL: './',
+        apiURL: 'https://www.openad.network',
+        dist: 'test',
+      },
+      prod: {
+        staticURL: './',
+        apiURL: 'https://www.openad.network',
+        dist: 'prod',
       },
       uat: {
         staticURL: './',
@@ -41,16 +51,7 @@ const importModules = [new MultiModule('OpenADApp', {
   webURL: 'https://www.openad.network/',
   zoneId: '12',
   reviveId: '6fced4eee9927b57847cf8dce447ceac',
-  test: {
-    staticURL: './',
-    apiURL: 'https://www.openad.network',
-    dist: 'test',
-  },
-  prod: {
-    staticURL: './',
-    apiURL: 'https://www.openad.network',
-    dist: 'prod',
-  },
+  server: 'https',
 })];
 
 let eventName = String(process.env.npm_lifecycle_event).split('-');

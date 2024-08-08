@@ -33,7 +33,7 @@ module.exports = (RESETENV) => {
       port: BuildENV.port && Number(BuildENV.port),
       hot: true,
       // inline: true,
-      server: 'https',
+      server: BuildENV.server,
       client: {
         reconnect: false,
         progress: false,
@@ -57,20 +57,20 @@ module.exports = (RESETENV) => {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
       },
-      {
-        test: /\.s[ac]ss$/i,
-        use: ['style-loader',
-          'css-loader',
-          'sass-loader'],
-      },
-      {
-        test: /\.less$/i,
-        // eslint-disable-next-line array-bracket-newline
-        use: [
-          'style-loader',
-          'css-loader',
-          'less-loader'],
-      }],
+        {
+          test: /\.s[ac]ss$/i,
+          use: ['style-loader',
+            'css-loader',
+            'sass-loader'],
+        },
+        {
+          test: /\.less$/i,
+          // eslint-disable-next-line array-bracket-newline
+          use: [
+            'style-loader',
+            'css-loader',
+            'less-loader'],
+        }],
     },
     // eslint-disable-next-line array-bracket-newline
     plugins: [
@@ -94,8 +94,8 @@ module.exports = (RESETENV) => {
       }),
       new FriendlyErrorsWebpackPlugin({
         compilationSuccessInfo: {
-          messages: [`You application is running here https://${localIpAddress}:${BuildENV.port}`,
-            `You can also open local address https://localhost:${BuildENV.port}`],
+          messages: [`You application is running here ${BuildENV.server}://${localIpAddress}:${BuildENV.port}`,
+            `You can also open local address ${BuildENV.server}://localhost:${BuildENV.port}`],
         },
         clearConsole: true,
         // eslint-disable-next-line no-unused-vars

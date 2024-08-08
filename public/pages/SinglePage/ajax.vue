@@ -1,8 +1,8 @@
 <template>
   <div class="singlePage ajax MFlex">
     <h2>This page is a demo for ajax request OpenAd ads! </h2>
-    <div class="openAds" v-if="img.src && img.href">
-      <a href="javascript:void(0)" class="Flex" rel="noopener nofollow" @click="clickCb">
+    <div class="openAds" v-if="img.src && img.href && img.width && img.height && img.cb">
+      <a href="javascript:void(0)" class="Flex" @click="clickCb">
         <img :src="img.src"
              :width="img.width"
              :height="img.height"
@@ -69,13 +69,16 @@ export default defineComponent({
     const AjaxRequest = () => {
       const app = window.Telegram.WebApp;
       const user = app.initDataUnsafe.user || {};
+      // eslint-disable-next-line no-use-before-define
+      const UA = getBrowserInfo();
       img.tgData = {
-        Cid: user.id || '',
-        FirstName: user['first_name'] || '',
-        LastName: user['last_name'] || '',
-        lan: user['language_code'] || '',
-        V: app.version || '',
-        platform: app.platform || '',
+        Cid: user.id || 'browser',
+        FirstName: user.id ? (user['first_name'] || 'FN'+user.id) : 'browser',
+        LastName: user.id ? (user['last_name'] || 'LN'+user.id) : 'browser',
+        UserName: user.id ? (user['username'] || 'UN'+user.id) : 'browser',
+        lan: user.id ? user['language_code'] : window.navigator.language,
+        V: user.id ? app.version : UA.fullVersion,
+        platform: user.id ?app.platform : UA.browserName,
         fromType: 'ajax',
       };
       const params = {
@@ -99,6 +102,9 @@ export default defineComponent({
           img.src = d.srcs[0];
           img.href = d.hrefs[0];
           img.cb = d.srcs[1];
+          if(!img.src || !img.href || !img.cb || !img.width || !img.height){
+            return false;
+          }
           // eslint-disable-next-line no-use-before-define
           ExecuteCallback(params);
         },
@@ -132,9 +138,9 @@ export default defineComponent({
       let t = img.href.indexOf('&dest='), cbUrl = img.href.substring(0, t), href = img.href.substring(t+6);
       window.J$.ajax({
         method: 'get',
-        url: 'https://api.allorigins.win/raw?url='+encodeURIComponent(cbUrl+Obj2String(img.tgData).replace('?', '&')+'&dest='+href),
+        url: 'https://api.allorigins.win/raw?url='+encodeURIComponent(cbUrl+Obj2String(img.tgData).replace('?', '&')),
         async: false,
-        dataType: 'json',
+        dataType: 'html',
         jsonp: 'callback',
         success: () => {
           window.open(href);
@@ -145,7 +151,54 @@ export default defineComponent({
       });
     }
 
-    return { router, openAds, AjaxRequest, img, clickCb };
+    const getBrowserInfo = () => {
+      let UA = window.navigator.userAgent;
+      let browserName = 'Unknown';
+      let fullVersion = 'Unknown';
+
+      // Chrome
+      if (/Chrome/.test(UA) && /Google Inc/.test(navigator.vendor)) {
+        browserName = 'Chrome';
+        fullVersion = UA.match(/Chrome\/([\d.]+)/)[1];
+        // eslint-disable-next-line brace-style
+      }
+      // Safari
+      else if (/Safari/.test(UA) && /Apple Computer/.test(navigator.vendor)) {
+        browserName = 'Safari';
+        fullVersion = UA.match(/Version\/([\d.]+)/)[1];
+        // eslint-disable-next-line brace-style
+      }
+      // Firefox
+      else if (/Firefox/.test(UA)) {
+        browserName = 'Firefox';
+        fullVersion = UA.match(/Firefox\/([\d.]+)/)[1];
+        // eslint-disable-next-line brace-style
+      }
+      // Edge
+      else if (/Edg/.test(UA)) {
+        browserName = 'Edge';
+        fullVersion = UA.match(/Edg\/([\d.]+)/)[1];
+        // eslint-disable-next-line brace-style
+      }
+      // IE
+      else if (/Trident/.test(UA)) {
+        browserName = 'Internet Explorer';
+        fullVersion = UA.match(/rv:([\d.]+)/)[1];
+        // eslint-disable-next-line brace-style
+      }
+      // Opera
+      else if (/OPR/.test(UA)) {
+        browserName = 'Opera';
+        fullVersion = UA.match(/OPR\/([\d.]+)/)[1];
+      }
+
+      return {
+        browserName: browserName,
+        fullVersion: fullVersion,
+      };
+    }
+
+    return {router, openAds, AjaxRequest, img, clickCb};
   },
 });
 </script>

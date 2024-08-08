@@ -18,31 +18,31 @@ const pathList = [{
       path: '/SinglePage/direct',
       name: 'SinglePageDirect',
       meta: { title: '', keepAlive: false },
-      component: () => import(/* webpackChunkName: "HomeIndex" */'@/pages/SinglePage/direct.vue'),
+      component: () => import(/* webpackChunkName: "SinglePageDirect" */'@/pages/SinglePage/direct.vue'),
     },
     {
       path: '/SinglePage/async',
       name: 'SinglePageAsync',
       meta: { title: '', keepAlive: false },
-      component: () => import(/* webpackChunkName: "HomeIndex" */'@/pages/SinglePage/async.vue'),
+      component: () => import(/* webpackChunkName: "SinglePageAsync" */'@/pages/SinglePage/async.vue'),
     },
     {
       path: '/SinglePage/dynamic',
       name: 'SinglePageDynamic',
       meta: { title: '', keepAlive: false },
-      component: () => import(/* webpackChunkName: "HomeIndex" */'@/pages/SinglePage/dynamic.vue'),
+      component: () => import(/* webpackChunkName: "SinglePageDynamic" */'@/pages/SinglePage/dynamic.vue'),
     },
     {
       path: '/SinglePage/ajax',
       name: 'SinglePageAjax',
       meta: { title: '', keepAlive: false },
-      component: () => import(/* webpackChunkName: "HomeIndex" */'@/pages/SinglePage/ajax.vue'),
+      component: () => import(/* webpackChunkName: "SinglePageAjax" */'@/pages/SinglePage/ajax.vue'),
     },
     {
       path: '/popup/show',
       name: 'PopupShow',
       meta: { title: '', keepAlive: false },
-      component: () => import(/* webpackChunkName: "HomeIndex" */'@/pages/popup/show.vue'),
+      component: () => import(/* webpackChunkName: "PopupShow" */'@/pages/popup/show.vue'),
     }],
 }];
 export default pathList;
