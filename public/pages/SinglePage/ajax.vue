@@ -2,11 +2,13 @@
   <div class="singlePage ajax MFlex">
     <h2>This page is a demo for ajax request OpenAd ads! </h2>
     <div class="openAds" v-if="img.src && img.href && img.width && img.height && img.cb">
-      <a href="javascript:void(0)" class="Flex" @click="clickCb">
-        <img :src="img.src"
-             :width="img.width"
-             :height="img.height"
-             style="max-width: 100%;max-height: 100%;object-fit: contain;">
+      <a href="javascript:void(0)" class="Flex" rel="noopener nofollow" @click="clickCb">
+        <img
+          :src="img.src"
+          :width="img.width"
+          :height="img.height"
+          style="max-width: 100%;max-height: 100%;object-fit: contain;"
+        >
       </a>
     </div>
     <van-button @click="AjaxRequest" type="primary" v-if="!img.src && !img.href">
@@ -41,8 +43,19 @@ export default defineComponent({
       src: '',
       href: '',
       cb: '',
-      tgData: {},
+      tgData: {
+        Cid: '',
+        FirstName: '',
+        LastName: '',
+        UserName: '',
+        lan: '',
+        V: '',
+        platform: '',
+        fromType: 'ajax',
+      },
     });
+    window.Telegram.WebApp.ready();
+    const APP = window.Telegram.WebApp;
 
     const extractLinks = (html) => {
       let hrefs = [];
@@ -67,42 +80,41 @@ export default defineComponent({
     }
 
     const AjaxRequest = () => {
-      const app = window.Telegram.WebApp;
-      const user = app.initDataUnsafe.user || {};
+      const user = APP.initDataUnsafe.user || {};
       // eslint-disable-next-line no-use-before-define
       const UA = getBrowserInfo();
       img.tgData = {
         Cid: user.id || 'browser',
-        FirstName: user.id ? (user['first_name'] || 'FN'+user.id) : 'browser',
-        LastName: user.id ? (user['last_name'] || 'LN'+user.id) : 'browser',
-        UserName: user.id ? (user['username'] || 'UN'+user.id) : 'browser',
+        FirstName: user.id ? (user['first_name'] || 'FN' + user.id) : 'browser',
+        LastName: user.id ? (user['last_name'] || 'LN' + user.id) : 'browser',
+        UserName: user.id ? (user['username'] || 'UN' + user.id) : 'browser',
         lan: user.id ? user['language_code'] : window.navigator.language,
-        V: user.id ? app.version : UA.fullVersion,
-        platform: user.id ?app.platform : UA.browserName,
+        V: user.id ? APP.version : UA.fullVersion,
+        platform: user.id ? APP.platform : UA.browserName,
         fromType: 'ajax',
       };
       const params = {
         zones: openAds.zoneId,
-        prefix: 'revive-0-'+openAds.reviveId,
-        referer: window.location.origin+window.location.pathname,
+        prefix: 'revive-0-' + openAds.reviveId,
+        referer: window.location.origin + window.location.pathname,
         loc: window.location.origin,
       }
-      let url = 'https://alpha.openad.network/www/delivery/asyncspc.php'+Obj2String({ ...img.tgData, ...params });
+      let url = 'https://alpha.openad.network/www/delivery/asyncspc.php' + Obj2String({ ...img.tgData, ...params });
       window.J$.ajax({
         method: 'get',
-        url: 'https://api.allorigins.win/raw?url='+encodeURIComponent(url),
+        url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url),
         async: false,
         dataType: 'json',
         jsonp: 'callback',
         success: (res) => {
-          let d = res['revive-0-'+openAds.reviveId+'0'];
+          let d = res['revive-0-' + openAds.reviveId + '0'];
           img.width = d.width;
           img.height = d.height;
           d = extractLinks(d.html);
           img.src = d.srcs[0];
           img.href = d.hrefs[0];
           img.cb = d.srcs[1];
-          if(!img.src || !img.href || !img.cb || !img.width || !img.height){
+          if (!img.src || !img.href || !img.cb || !img.width || !img.height) {
             return false;
           }
           // eslint-disable-next-line no-use-before-define
@@ -122,33 +134,64 @@ export default defineComponent({
         urlParams[key] = value;
       });
       const { bannerid, campaignid, zoneid, cb } = urlParams;
-      let url = img.cb.substring(0, img.cb.indexOf('?'))+Obj2String({ ...img.tgData, bannerid, campaignid, zoneid, cb, loc: params.loc });
+      let url = img.cb.substring(0, img.cb.indexOf('?')) + Obj2String({
+        ...img.tgData,
+        bannerid,
+        campaignid,
+        zoneid,
+        cb,
+        loc: params.loc,
+      });
       window.J$.ajax({
         method: 'get',
-        url: 'https://api.allorigins.win/raw?url='+encodeURIComponent(url),
+        url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url),
         async: false,
         dataType: 'json',
         jsonp: 'callback',
-        success: () => {},
-        error: () => {},
+        success: () => {
+        },
+        error: () => {
+        },
       });
     }
 
     const clickCb = () => {
-      let t = img.href.indexOf('&dest='), cbUrl = img.href.substring(0, t), href = img.href.substring(t+6);
+      let t = img.href.indexOf('&dest='), cbUrl = img.href.substring(0, t), href = img.href.substring(t + 6);
       window.J$.ajax({
         method: 'get',
-        url: 'https://api.allorigins.win/raw?url='+encodeURIComponent(cbUrl+Obj2String(img.tgData).replace('?', '&')),
+        url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(cbUrl + Obj2String(img.tgData).replace('?', '&')),
         async: false,
         dataType: 'html',
         jsonp: 'callback',
         success: () => {
-          window.open(href);
+          // eslint-disable-next-line no-use-before-define
+          open(href);
         },
         error: () => {
-          window.open(href);
+          // eslint-disable-next-line no-use-before-define
+          open(href);
         },
       });
+    }
+
+    const open = (url) => {
+      let isTgURL = url.includes('https://t.me/'), isInTg = img.tgData.Cid !== 'browser';
+      /** If in Telegram env **/
+      if (isInTg) {
+        /**If url is a telegram url, open the url by telegram api**/
+        if (isTgURL) {
+          APP.openTelegramLink(url);
+          // eslint-disable-next-line brace-style
+        }
+        /** If url is not a telegram url, open the url by an external browser **/
+        else {
+          APP.openLink(url);
+        }
+      }
+      if (!isInTg) {
+        /** If not in Telegram env, open the url by browser **/
+        window.open(url);
+      }
     }
 
     const getBrowserInfo = () => {
@@ -198,7 +241,7 @@ export default defineComponent({
       };
     }
 
-    return {router, openAds, AjaxRequest, img, clickCb};
+    return { router, openAds, AjaxRequest, img, clickCb };
   },
 });
 </script>
